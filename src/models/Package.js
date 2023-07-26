@@ -1,24 +1,12 @@
-import mongoose from "mongoose";
-import crypto from "crypto";
+import mongoose from 'mongoose';
+import crypto from 'crypto';
 
 const packageSchema = new mongoose.Schema(
   {
-    package_id: {
-      type: String,
-      unique: true,
-      default: function () {
-        return crypto.randomBytes(8).toString("hex");
-      },
-      required: true,
-    },
-
     active_delivery_id: {
       type: String,
-      unique: true,
-      default: function () {
-        return crypto.randomBytes(8).toString("hex");
-      },
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Delivery',
     },
 
     description: {
@@ -93,6 +81,8 @@ const packageSchema = new mongoose.Schema(
   }
 );
 
-const Package = mongoose.model("Package", packageSchema);
+packageSchema.index({ description: 'text' });
+
+const Package = mongoose.model('Package', packageSchema);
 
 export default Package;

@@ -1,20 +1,10 @@
-import mongoose from "mongoose";
-import crypto from "crypto";
+import mongoose from 'mongoose';
 
 const deliverySchema = new mongoose.Schema(
   {
-    delivery_id: {
-      type: String,
-      required: true,
-      unique: true,
-      default: function () {
-        return crypto.randomBytes(8).toString("hex");
-      },
-    },
-
     package_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Package",
+      ref: 'Package',
       required: true,
     },
 
@@ -35,8 +25,8 @@ const deliverySchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ["open", "picked-up,", "in-transit", "delivered", "failed"],
-      required: true,
+      default: 'open',
+      enum: ['open', 'picked-up,', 'in-transit', 'delivered', 'failed'],
     },
   },
   {
@@ -44,6 +34,6 @@ const deliverySchema = new mongoose.Schema(
   }
 );
 
-const Delivery = mongoose.model("Delivery", deliverySchema);
+const Delivery = mongoose.model('Delivery', deliverySchema);
 
 export default Delivery;
